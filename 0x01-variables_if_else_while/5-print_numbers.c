@@ -1,4 +1,4 @@
-#include <stdio.h>
+i#include <stdio.h>
 /**
  * main - function to print base 10 numbers
  * Return: return (0) success
@@ -11,5 +11,6 @@ int main(void)
 {
 	printf("%d\n", i);
 }
+print("\n");
 return (0);
 }
