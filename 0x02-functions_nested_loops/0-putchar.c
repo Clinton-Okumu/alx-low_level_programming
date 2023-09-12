@@ -1,30 +1,18 @@
-#include <unistd.h>
-#include "main.h"
+#include <main.h>
 /**
- * _putchar - write a character to the standard output (stdout).
- * @c: The character to be written.
- */
-void _putchar(char c)
-{
-	/* Use tabs for indentation */
-	write(1, &c, 1);
-}
-
-/**
- * main - Entry point of the program.
- * Return: 0 on success.
- */
+  * main - code entry point
+  * Return: (0) success
+  */
 int main(void)
 {
-	char text[] = "_putchar";
-
-	for (int i = 0; text[i] != '\0'; i++)
-	{
-		_putchar(text[i]);
-	}
-
-	_putchar('\n'); /* Print a newline character after "_putchar" */
-
-	return (0);
+_putchar('_');
+_putchar('p');
+_putchar('u');
+_putchar('t');
+_putchar('c');
+_putchar('h');
+_putchar('a');
+_putchar('r');
+_putchar('\n');
+return (0);
 }
-
