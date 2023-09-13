@@ -1,22 +1,25 @@
 #include <stdio.h>
-#include "main.h"
-
 
 /**
- * main - check the code.
+ * main - Entry point
  *
- * Return: Always 0.
+ * Return: Always 0 (Success)
  */
-
-
 int main(void)
 {
-	print_times_table(3);
-	_putchar('\n');
-	print_times_table(5);
-	_putchar('\n');
-	print_times_table(98);
-	_putchar('\n');
-	print_times_table(12);
+	int sum = 0;
+	int i;
+
+	for (i = 1; i < 1024; i++)
+	{
+		if (i % 3 == 0 || i % 5 == 0)
+		{
+			sum += i;
+		}
+	}
+
+	printf("%d\n", sum);
+
 	return (0);
 }
+
