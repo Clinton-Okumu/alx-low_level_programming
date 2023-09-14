@@ -1,17 +1,13 @@
-#include "main.h"
+#include <unistd.h>
+
 /**
-  * positive_or_negative - outputs number
-  * @i: integer
-  */
-
-void positive_or_negative(int i)
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
 {
-	if (i > 0)
-		printf("%d is positive\n", i);
-
-	else if (i < 0)
-		printf("%d is negative\n", i);
-
-	else
-		printf("%d is zero\n", i);
+	return (write(1, &c, 1));
 }
