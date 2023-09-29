@@ -1,6 +1,3 @@
 #!/bin/bash
-for file in *.c; do
-	if [ -f "$sile" ]; then
-		gcc -c "$file" -o "${file%.c}.o"
-	fi
-done
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -c *.c
+ar rc liball.a *.o
