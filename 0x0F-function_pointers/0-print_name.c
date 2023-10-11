@@ -8,21 +8,7 @@
  */
 void print_name(char *name, void (*f)(char *))
 {
-if (name != NULL && f != NULL)
-{
-f(name);
-}
-else
-{
-printf("Invalid input\n");
-}
-}
-
-/**
- * print_console - Prints a name to the console.
- * @name: The name to be printed.
- */
-void print_console(char *name)
-{
-printf("Name: %s\n", name);
+	if (name == NULL || f == NULL)
+		return;
+	f(name);
 }
