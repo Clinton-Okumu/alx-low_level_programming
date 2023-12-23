@@ -1,59 +1,89 @@
-#include "hash_tables.h"
+#ifndef HASH_TABLES_H
+#define HASH_TABLES_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
- * hash_table_set - Add or update an element in a hash table.
- * @ht: A pointer to the hash table.
- * @key: The key to add - cannot be an empty string.
- * @value: The value associated with key.
+ * struct hash_node_s - Node of a hash table
  *
- * Return: Upon failure - 0.
- *         Otherwise - 1.
+ * @key: The key, string
+ * The key is unique in the HashTable
+ * @value: The value corresponding to a key
+ * @next: A pointer to the next node of the List
  */
-/*
-1. If the hash table, key, or value is NULL, return 0.
-2. If the key already exists, update the value and return 1.
-3. If the key doesn’t exist, create a new node and add it to the hash table.
-4. Return 1.
-*/
-int hash_table_set(hash_table_t *ht, const char *key, const char *value)
+typedef struct hash_node_s
 {
-	hash_node_t *new;
-	char *value_copy;
-	unsigned long int index, i;
+     char *key;
+     char *value;
+     struct hash_node_s *next;
+} hash_node_t;
 
-	if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
-		return (0);
+/**
+ * struct hash_table_s - Hash table data structure
+ *
+ * @size: The size of the array
+ * @array: An array of size @size
+ * Each cell of this array is a pointer to the first node of a linked list,
+ * because we want our HashTable to use a Chaining collision handling
+ */
+typedef struct hash_table_s
+{
+     unsigned long int size;
+     hash_node_t **array;
+} hash_table_t;
 
-	value_copy = strdup(value);
-	if (value_copy == NULL)
-		return (0);
+hash_table_t *hash_table_create(unsigned long int size);
+unsigned long int hash_djb2(const unsigned char *str);
+unsigned long int key_index(const unsigned char *key, unsigned long int size);
+int hash_table_set(hash_table_t *ht, const char *key, const char *value);
+char *hash_table_get(const hash_table_t *ht, const char *key);
+void hash_table_print(const hash_table_t *ht);
+void hash_table_delete(hash_table_t *ht);
 
-	index = key_index((const unsigned char *)key, ht->size);
-	for (i = index; ht->array[i]; i++)
-	{
-		if (strcmp(ht->array[i]->key, key) == 0)
-		{
-			free(ht->array[i]->value);
-			ht->array[i]->value = value_copy;
-			return (1);
-		}
-	}
+/**
+ * struct shash_node_s - Node of a sorted hash table
+ *
+ * @key: The key, string
+ * The key is unique in the HashTable
+ * @value: The value corresponding to a key
+ * @next: A pointer to the next node of the List
+ * @sprev: A pointer to the previous element of the sorted linked list
+ * @snext: A pointer to the next element of the sorted linked list
+ */
+typedef struct shash_node_s
+{
+     char *key;
+     char *value;
+     struct shash_node_s *next;
+     struct shash_node_s *sprev;
+     struct shash_node_s *snext;
+} shash_node_t;
 
-	new = malloc(sizeof(hash_node_t));
-	if (new == NULL)
-	{
-		free(value_copy);
-		return (0);
-	}
-	new->key = strdup(key);
-	if (new->key == NULL)
-	{
-		free(new);
-		return (0);
-	}
-	new->value = value_copy;
-	new->next = ht->array[index];
-	ht->array[index] = new;
+/**
+ * struct shash_table_s - Sorted hash table data structure
+ *
+ * @size: The size of the array
+ * @array: An array of size @size
+ * Each cell of this array is a pointer to the first node of a linked list,
+ * because we want our HashTable to use a Chaining collision handling
+ * @shead: A pointer to the first element of the sorted linked list
+ * @stail: A pointer to the last element of the sorted linked list
+ */
+typedef struct shash_table_s
+{
+     unsigned long int size;
+     shash_node_t **array;
+     shash_node_t *shead;
+     shash_node_t *stail;
+} shash_table_t;
 
-	return (1);
-}
+shash_table_t *shash_table_create(unsigned long int size);
+int shash_table_set(shash_table_t *ht, const char *key, const char *value);
+char *shash_table_get(const shash_table_t *ht, const char *key);
+void shash_table_print(const shash_table_t *ht);
+void shash_table_print_rev(const shash_table_t *ht);
+void shash_table_delete(shash_table_t *ht);
+
+#endif /* HASH_TABLES */
